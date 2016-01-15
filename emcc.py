@@ -934,6 +934,15 @@ There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR P
         # used for warnings in emscripten.py
         shared.Settings.ORIGINAL_EXPORTED_FUNCTIONS = original_exported_response or shared.Settings.EXPORTED_FUNCTIONS[:]
 
+    # Use settings
+
+    if not shared.Settings.WASM_BACKEND:
+      shared.set_llvm_target('asmjs-unknown-emscripten')
+    else:
+      shared.set_llvm_target('wasm32-unknown-unknown')
+
+    newargs += shared.get_llvm_target_command()
+
     try:
       assert shared.Settings.ASM_JS > 0, 'ASM_JS must be enabled in fastcomp'
       assert shared.Settings.SAFE_HEAP in [0, 1], 'safe heap must be 0 or 1 in fastcomp'
