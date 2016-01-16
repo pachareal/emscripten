@@ -933,7 +933,7 @@ There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR P
       if key == 'EXPORTED_FUNCTIONS':
         # used for warnings in emscripten.py
         shared.Settings.ORIGINAL_EXPORTED_FUNCTIONS = original_exported_response or shared.Settings.EXPORTED_FUNCTIONS[:]
-      assert key != 'WASM_BACKEND', 'do not set -s WASM_BACKEND, instead set WASM_BACKEND=1 in the environment'
+      assert key != 'WASM_BACKEND', 'do not set -s WASM_BACKEND, instead set EMCC_WASM_BACKEND=1 in the environment'
 
     if shared.get_llvm_target() == shared.WASM_TARGET:
       shared.Settings.WASM_BACKEND = 1
@@ -1119,7 +1119,7 @@ There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR P
 
     if shared.Settings.WASM_BACKEND:
       # to bootstrap struct_info, we need binaryen
-      os.environ['WASM_BACKEND_BINARYEN'] = shared.Settings.BINARYEN
+      os.environ['EMCC_WASM_BACKEND_BINARYEN'] = shared.Settings.BINARYEN
 
     shared.Settings.EMSCRIPTEN_VERSION = shared.EMSCRIPTEN_VERSION
     shared.Settings.OPT_LEVEL = opt_level
