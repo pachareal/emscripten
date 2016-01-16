@@ -933,18 +933,12 @@ There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR P
       if key == 'EXPORTED_FUNCTIONS':
         # used for warnings in emscripten.py
         shared.Settings.ORIGINAL_EXPORTED_FUNCTIONS = original_exported_response or shared.Settings.EXPORTED_FUNCTIONS[:]
+      assert key != 'WASM_BACKEND', 'do not set -s WASM_BACKEND, instead set WASM_BACKEND=1 in the environment'
+
+    if shared.get_llvm_target() == shared.WASM_TARGET:
+      shared.Settings.WASM_BACKEND = 1
 
     # Use settings
-
-    if not shared.Settings.WASM_BACKEND:
-      shared.set_llvm_target(shared.ASM_JS_TARGET)
-    else:
-      shared.set_llvm_target(shared.WASM_TARGET)
-      # use a separate directory for wasm
-      os.environ['EM_CACHE'] = shared.Cache.dirname + '_wasm'
-      shared.reconfigure_cache()
-
-    newargs += shared.get_llvm_target_command()
 
     try:
       assert shared.Settings.ASM_JS > 0, 'ASM_JS must be enabled in fastcomp'
